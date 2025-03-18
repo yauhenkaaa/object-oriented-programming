@@ -15,15 +15,15 @@
         <ToolBar HorizontalAlignment="Left" Height="30" Margin="-9,17,0,0" VerticalAlignment="Top" Width="1199" Grid.ColumnSpan="2" Background="#FFE6E6E6" BorderBrush="Black"/>
         <StackPanel Margin="350,47,0,0" Grid.Column="1" Width="250" Background="#FFB7B7B7"/>
         <WrapPanel Width="250" Margin="0,47,351,0" Background="#FFB5B5B5">
-            <Button Content="Линия" Width="250" Height="55" FontFamily="Arial" FontSize="18"/>
-            <Button Content="Прямоугольник" Width="250" Height="55" FontFamily="Arial" FontSize="18"/>
-            <Button Content="Эллипс" Width="250" Height="55" FontFamily="Arial" FontSize="18"/>
-            <Button Content="Ломаная" Width="250" Height="55" FontFamily="Arial" FontSize="18"/>
-            <Button Content="Многоугольник" Width="250" Height="55" FontFamily="Arial" FontSize="18"/>
+            <Button Name="btnLine" Content="Линия" Width="250" Height="55" FontFamily="Arial" FontSize="18" Click="btnLine_Click"/>
+            <Button Name="btnRectangle" Content="Прямоугольник" Width="250" Height="55" FontFamily="Arial" FontSize="18" Click="btnRectangle_Click"/>
+            <Button Name="btnEllipse" Content="Эллипс" Width="250" Height="55" FontFamily="Arial" FontSize="18" Click="btnEllipse_Click"/>
+            <Button Name="btnPolyline" Content="Ломаная" Width="250" Height="55" FontFamily="Arial" FontSize="18" Click="btnPolyline_Click"/>
+            <Button Name="btnPolygon" Content="Многоугольник" Width="250" Height="55" FontFamily="Arial" FontSize="18" Click="btnPolygon_Click"/>
             
         </WrapPanel>
-        <Canvas Grid.ColumnSpan="2" Margin="250,47,255,0" Background="White" Width="700"/>
-
+        <Canvas Name="drawCanvas" Grid.ColumnSpan="2" Margin="250,47,255,0" Background="White" Width="700"/>
+        
 
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using GraphicalEditor.GraphicalPrimitives;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,9 +22,28 @@ namespace GraphicalEditor
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
+        private void ClearCanvas() { 
+            drawCanvas.Children.Clear();
         }
+
+        private void AddShapeToCanvas(ShapeBase shape)
+        {
+            ClearCanvas();
+            var element = shape.CreateShape();
+            drawCanvas.Children.Add(element);
+        }
+
+        private void btnLine_Click(object sender, RoutedEventArgs e) => AddShapeToCanvas(new LineShape());
+
+
+        private void btnRectangle_Click(object sender, RoutedEventArgs e) => AddShapeToCanvas(new RectangleShape());
+
+        private void btnEllipse_Click(object sender, RoutedEventArgs e) => AddShapeToCanvas(new EllipseShape());
+
+        private void btnPolyline_Click(object sender, RoutedEventArgs e) => AddShapeToCanvas(new PolylineShape());
+
+
+        private void btnPolygon_Click(object sender, RoutedEventArgs e) => AddShapeToCanvas(new PolygonShape());
+
     }
 }
