@@ -8,4 +8,20 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\ellipse.png" />
+    <None Remove="Images\line.png" />
+    <None Remove="Images\polygon.png" />
+    <None Remove="Images\polyline.png" />
+    <None Remove="Images\rectangle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\ellipse.png" />
+    <Resource Include="Images\line.png" />
+    <Resource Include="Images\polygon.png" />
+    <Resource Include="Images\polyline.png" />
+    <Resource Include="Images\rectangle.png" />
+  </ItemGroup>
+
 </Project>

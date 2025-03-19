@@ -15,15 +15,40 @@
         <ToolBar HorizontalAlignment="Left" Height="30" Margin="-9,17,0,0" VerticalAlignment="Top" Width="1199" Grid.ColumnSpan="2" Background="#FFE6E6E6" BorderBrush="Black"/>
         <StackPanel Margin="350,47,0,0" Grid.Column="1" Width="250" Background="#FFB7B7B7"/>
         <WrapPanel Width="250" Margin="0,47,351,0" Background="#FFB5B5B5">
-            <Button Name="btnLine" Content="Линия" Width="250" Height="55" FontFamily="Arial" FontSize="18" Click="btnLine_Click"/>
-            <Button Name="btnRectangle" Content="Прямоугольник" Width="250" Height="55" FontFamily="Arial" FontSize="18" Click="btnRectangle_Click"/>
-            <Button Name="btnEllipse" Content="Эллипс" Width="250" Height="55" FontFamily="Arial" FontSize="18" Click="btnEllipse_Click"/>
-            <Button Name="btnPolyline" Content="Ломаная" Width="250" Height="55" FontFamily="Arial" FontSize="18" Click="btnPolyline_Click"/>
-            <Button Name="btnPolygon" Content="Многоугольник" Width="250" Height="55" FontFamily="Arial" FontSize="18" Click="btnPolygon_Click"/>
-            
+            <Button Name="btnLine" Width="250" Height="55" Click="btnLine_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="Images/line.png" Width="54" Height="32"/>
+                    <TextBlock Text="Линия" FontFamily="Arial" FontSize="18" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="btnRectangle" Width="250" Height="55" Click="btnRectangle_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="Images/rectangle.png" Width="64" Height="37"/>
+                    <TextBlock Text="Прямоугольник" FontFamily="Arial" FontSize="18" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="btnEllipse" Width="250" Height="55" Click="btnEllipse_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="Images/ellipse.png" Width="64" Height="37"/>
+                    <TextBlock Text="Эллипс" FontFamily="Arial" FontSize="18" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="btnPolyline" Width="250" Height="55" Click="btnPolyline_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="Images/polyline.png" Width="64" Height="37"/>
+                    <TextBlock Text="Ломаная" FontFamily="Arial" FontSize="18" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="btnPolygon" Width="250" Height="55" Click="btnPolygon_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="Images/polygon.png" Width="64" Height="37"/>
+                    <TextBlock Text="Многоугольник" FontFamily="Arial" FontSize="18" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
         </WrapPanel>
         <Canvas Name="drawCanvas" Grid.ColumnSpan="2" Margin="250,47,255,0" Background="White" Width="700"/>
-        
+
 
     </Grid>
 </Window>
