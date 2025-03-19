@@ -3,18 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:GraphicalEditor"
         mc:Ignorable="d"
         Title="Graphical Editor" Height="800" Width="1200" ResizeMode="NoResize">
     <Grid Background="White" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="600"/>
-            <ColumnDefinition Width="600*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Menu Width="1200" Grid.ColumnSpan="2" Margin="0,0,0,744" BorderBrush="Black" Background="#FFCCCCCC" Height="30"/>
-        <ToolBar HorizontalAlignment="Left" Height="30" Margin="-9,17,0,0" VerticalAlignment="Top" Width="1199" Grid.ColumnSpan="2" Background="#FFE6E6E6" BorderBrush="Black"/>
-        <StackPanel Margin="350,47,0,0" Grid.Column="1" Width="250" Background="#FFB7B7B7"/>
-        <WrapPanel Width="250" Margin="0,47,351,0" Background="#FFB5B5B5">
+        <WrapPanel Margin="0,47,350,0" Background="#FFE3E3E3">
             <Button Name="btnLine" Width="250" Height="55" Click="btnLine_Click">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Image Source="Images/line.png" Width="54" Height="32"/>
@@ -45,10 +43,41 @@
                     <TextBlock Text="Многоугольник" FontFamily="Arial" FontSize="18" Margin="5,0,0,0" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-
         </WrapPanel>
-        <Canvas Name="drawCanvas" Grid.ColumnSpan="2" Margin="250,47,255,0" Background="White" Width="700"/>
+        <Canvas Name="drawCanvas" Grid.ColumnSpan="2" Margin="250,47,250,0" Background="White"/>
+        <StackPanel Grid.Column="1" Margin="350,47,0,0" Background="#FFD5D5D5">
+            <Separator Height="23" RenderTransformOrigin="0.499,-0.498"/>
+            <TextBlock Text="Цвет линии:" FontFamily="Arial" FontSize="18" Margin="0,0,0,5" Width="230"/>
+            <xctk:ColorPicker x:Name="LineColorPicker" SelectedColor="Black" Margin="0,0,0,10" Width="230"/>
+            <Separator Height="25" RenderTransformOrigin="0.499,-0.498"/>
+            <TextBlock Text="Цвет заливки:" FontFamily="Arial" FontSize="18" Margin="0,0,0,5" Width="230"/>
+            <xctk:ColorPicker x:Name="FillColorPicker" SelectedColor="White" Width="230"/>
+            <Separator Height="25" RenderTransformOrigin="0.499,-0.498"/>
+            <TextBlock Text="Толщина линии:" FontFamily="Arial" FontSize="18" Width="230"/>
+            <Slider Minimum="1" Maximum="10" Value="{Binding LineThickness}" Width="230" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding LineThickness}" Width="40" Margin="5,0"/>
 
-
+        </StackPanel>
+        <Menu Margin="0,0,0,715" Grid.ColumnSpan="2">
+            <MenuItem Header="Файл" Height="47" Width="50" FontFamily="Arial" FontSize="16">
+                <MenuItem Header="Новый" 
+                  Command="{Binding NewCommand}"
+                  InputGestureText="Ctrl+N"/>
+                <MenuItem Header="Открыть..." 
+                  Command="{Binding OpenCommand}"
+                  InputGestureText="Ctrl+O"/>
+                <MenuItem Header="Сохранить" 
+                  Command="{Binding SaveCommand}"
+                  InputGestureText="Ctrl+S"/>
+                <MenuItem Header="Сохранить как..." 
+                  Command="{Binding SaveAsCommand}"/>
+                <Separator/>
+                <MenuItem Header="Выход" 
+                  Command="{Binding ExitCommand}"/>
+            </MenuItem>
+            <Separator Height="68" Background="Black" Width="32"/>
+            <MenuItem Header="Отменить" Height="48" Width="110" FontFamily="Arial" FontSize="16"/>
+            <MenuItem Header="Восстановить" Height="48" Width="117" FontFamily="Arial" FontSize="16"/>
+        </Menu>
     </Grid>
 </Window>
