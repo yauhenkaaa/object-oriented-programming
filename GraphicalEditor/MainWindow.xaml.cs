@@ -35,15 +35,22 @@ namespace GraphicalEditor
 
         private void btnLine_Click(object sender, RoutedEventArgs e) => AddShapeToCanvas(new LineShape());
 
-
         private void btnRectangle_Click(object sender, RoutedEventArgs e) => AddShapeToCanvas(new RectangleShape());
 
         private void btnEllipse_Click(object sender, RoutedEventArgs e) => AddShapeToCanvas(new EllipseShape());
 
         private void btnPolyline_Click(object sender, RoutedEventArgs e) => AddShapeToCanvas(new PolylineShape());
 
-
         private void btnPolygon_Click(object sender, RoutedEventArgs e) => AddShapeToCanvas(new PolygonShape());
 
+        private void FileMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            //subMenu.Visibility = Visibility.Visible;
+        }
+
+        private void sldThickness_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            
+        }
     }
 }

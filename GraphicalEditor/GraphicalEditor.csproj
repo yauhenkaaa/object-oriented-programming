@@ -9,11 +9,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\ellipse.png" />
-    <None Remove="Images\line.png" />
-    <None Remove="Images\polygon.png" />
-    <None Remove="Images\polyline.png" />
-    <None Remove="Images\rectangle.png" />
+    <Compile Remove="Images\**" />
+    <Compile Remove="UI\**" />
+    <EmbeddedResource Remove="Images\**" />
+    <EmbeddedResource Remove="UI\**" />
+    <None Remove="Images\**" />
+    <None Remove="UI\**" />
+    <Page Remove="Images\**" />
+    <Page Remove="UI\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="View\Images\ellipse.png" />
+    <None Remove="View\Images\line.png" />
+    <None Remove="View\Images\plus.png" />
+    <None Remove="View\Images\polygon.png" />
+    <None Remove="View\Images\polyline.png" />
+    <None Remove="View\Images\rectangle.png" />
+    <None Remove="View\Images\redo.png" />
+    <None Remove="View\Images\undo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\Images\ellipse.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,11 +39,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\ellipse.png" />
-    <Resource Include="Images\line.png" />
-    <Resource Include="Images\polygon.png" />
-    <Resource Include="Images\polyline.png" />
-    <Resource Include="Images\rectangle.png" />
+    <Resource Include="View\Images\line.png" />
+    <Resource Include="View\Images\plus.png" />
+    <Resource Include="View\Images\polygon.png" />
+    <Resource Include="View\Images\polyline.png" />
+    <Resource Include="View\Images\rectangle.png" />
+    <Resource Include="View\Images\redo.png" />
+    <Resource Include="View\Images\undo.png" />
   </ItemGroup>
 
 </Project>

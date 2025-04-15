@@ -12,53 +12,38 @@
             <ColumnDefinition Width="600"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <WrapPanel Margin="0,47,350,0" Background="#FFE3E3E3">
-            <Button Name="btnLine" Width="250" Height="55" Click="btnLine_Click">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Image Source="Images/line.png" Width="54" Height="32"/>
-                    <TextBlock Text="Линия" FontFamily="Arial" FontSize="18" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                </StackPanel>
+        <WrapPanel Margin="0,50,520,0" Background="#FFE3E3E3">
+            <Button Name="btnLine" Width="80" Height="55" Click="btnLine_Click">
+                <Image Source="View/Images/line.png" Width="54" Height="32"/>
             </Button>
-            <Button Name="btnRectangle" Width="250" Height="55" Click="btnRectangle_Click">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Image Source="Images/rectangle.png" Width="64" Height="37"/>
-                    <TextBlock Text="Прямоугольник" FontFamily="Arial" FontSize="18" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                </StackPanel>
+            <Button Name="btnRectangle" Width="80" Height="55" Click="btnRectangle_Click">
+                <Image Source="View/Images/rectangle.png" Width="64" Height="37"/>
             </Button>
-            <Button Name="btnEllipse" Width="250" Height="55" Click="btnEllipse_Click">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Image Source="Images/ellipse.png" Width="64" Height="37"/>
-                    <TextBlock Text="Эллипс" FontFamily="Arial" FontSize="18" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                </StackPanel>
+            <Button Name="btnEllipse" Width="80" Height="55" Click="btnEllipse_Click">
+                <Image Source="View/Images/ellipse.png" Width="64" Height="37"/>
             </Button>
-            <Button Name="btnPolyline" Width="250" Height="55" Click="btnPolyline_Click">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Image Source="Images/polyline.png" Width="64" Height="37"/>
-                    <TextBlock Text="Ломаная" FontFamily="Arial" FontSize="18" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                </StackPanel>
+            <Button Name="btnPolyline" Width="80" Height="55" Click="btnPolyline_Click">
+                <Image Source="View/Images/polyline.png" Width="64" Height="37"/>
             </Button>
-            <Button Name="btnPolygon" Width="250" Height="55" Click="btnPolygon_Click">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Image Source="Images/polygon.png" Width="64" Height="37"/>
-                    <TextBlock Text="Многоугольник" FontFamily="Arial" FontSize="18" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                </StackPanel>
+            <Button Name="btnPolygon" Width="80" Height="55" Click="btnPolygon_Click">
+                <Image Source="View/Images/polygon.png" Width="64" Height="37"/>
             </Button>
         </WrapPanel>
-        <Canvas Name="drawCanvas" Grid.ColumnSpan="2" Margin="250,47,250,0" Background="White"/>
-        <StackPanel Grid.Column="1" Margin="350,47,0,0" Background="#FFD5D5D5">
-            <Separator Height="23" RenderTransformOrigin="0.499,-0.498"/>
+        <Canvas Name="drawCanvas" Grid.ColumnSpan="2" Margin="80,71,250,0" Background="White"/>
+        <StackPanel Grid.Column="1" Margin="350,50,0,0" Background="#FFD5D5D5">
+            <Separator Height="25" Visibility="Hidden" RenderTransformOrigin="0.499,-0.498"/>
             <TextBlock Text="Цвет линии:" FontFamily="Arial" FontSize="18" Margin="0,0,0,5" Width="230"/>
             <xctk:ColorPicker x:Name="LineColorPicker" SelectedColor="Black" Margin="0,0,0,10" Width="230"/>
-            <Separator Height="25" RenderTransformOrigin="0.499,-0.498"/>
+            <Separator Height="25" Visibility="Hidden" RenderTransformOrigin="0.499,-0.498"/>
             <TextBlock Text="Цвет заливки:" FontFamily="Arial" FontSize="18" Margin="0,0,0,5" Width="230"/>
             <xctk:ColorPicker x:Name="FillColorPicker" SelectedColor="White" Width="230"/>
-            <Separator Height="25" RenderTransformOrigin="0.499,-0.498"/>
+            <Separator Height="25" Visibility="Hidden" RenderTransformOrigin="0.499,-0.498"/>
             <TextBlock Text="Толщина линии:" FontFamily="Arial" FontSize="18" Width="230"/>
-            <Slider Minimum="1" Maximum="10" Value="{Binding LineThickness}" Width="230" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding LineThickness}" Width="40" Margin="5,0"/>
+            <Slider Name="sldThickness" Minimum="1" Value="0" ValueChanged="sldThickness_ValueChanged" Maximum="10" Width="230" VerticalAlignment="Center" SmallChange="1"/>
+            <TextBox Name="tbxThickness" Text="{Binding Value, ElementName=sldThickness}" FontFamily="Arial" FontSize="18" Width="40" Margin="5,0"/>
 
         </StackPanel>
-        <Menu Margin="0,0,0,715" Grid.ColumnSpan="2">
+        <Menu Margin="0,0,0,713" Grid.ColumnSpan="2" BorderBrush="Black">
             <MenuItem Header="Файл" Height="47" Width="50" FontFamily="Arial" FontSize="16">
                 <MenuItem Header="Новый" 
                   Command="{Binding NewCommand}"
@@ -72,12 +57,22 @@
                 <MenuItem Header="Сохранить как..." 
                   Command="{Binding SaveAsCommand}"/>
                 <Separator/>
-                <MenuItem Header="Выход" 
-                  Command="{Binding ExitCommand}"/>
             </MenuItem>
-            <Separator Height="68" Background="Black" Width="32"/>
-            <MenuItem Header="Отменить" Height="48" Width="110" FontFamily="Arial" FontSize="16"/>
-            <MenuItem Header="Восстановить" Height="48" Width="117" FontFamily="Arial" FontSize="16"/>
+            <Separator Height="68" Visibility="Hidden" Width="31"/>
+            <Button Height="40" Width="50">
+                <Image Source="View/Images/undo.png" Width="50" Height="35"/>
+            </Button>
+            <Button Height="40" Width="50">
+                <Image Source="View/Images/redo.png" Width="50" Height="35"/>
+            </Button>
+            <Separator Height="68" Background="Black" Width="30"/>
+            <Button Height="40" Width="200">
+                <StackPanel Width="200" Orientation="Horizontal">
+                    <Image Source="View/Images/plus.png" Width="43" Height="35"/>
+                    <Separator Visibility="Hidden" Width="10"/>
+                    <TextBlock Text="Добавить плагин" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="16"/>
+                </StackPanel>
+            </Button>
         </Menu>
     </Grid>
 </Window>
