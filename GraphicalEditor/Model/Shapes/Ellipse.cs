@@ -3,42 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace GraphicalEditor.GraphicalPrimitives
+namespace GraphicalEditor.Model.Shapes
 {
     public class EllipseShape : ShapeBase
     {
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Width { get; set; }
-        public double Height { get; set; }
-
-        public EllipseShape()
+        public Point Center { get; set; }
+        public double RadiusX { get; set; }
+        public double RadiusY { get; set; }
+        public override void Draw(DrawingContext dc)
         {
-            Width = rnd.Next(10, 300);
-            Height = rnd.Next(10, 300);
-            X = rnd.Next(0, CanvasWidth - (int)Width);
-            Y = rnd.Next(0, CanvasHeight - (int)Height);
-
-            Stroke = new SolidColorBrush(Color.FromRgb(
-                (byte)rnd.Next(256),
-                (byte)rnd.Next(256),
-                (byte)rnd.Next(256)));
-            StrokeThickness = 2;
+            dc.DrawEllipse(new SolidColorBrush(FillColor), new Pen(new SolidColorBrush(StrokeColor), StrokeThickness), Center, RadiusX, RadiusY);
         }
-
-        public override Shape CreateShape()
+        public override void Update(Point point)
         {
-            return new Ellipse
-            {
-                Width = Width,
-                Height = Height,
-                Stroke = Stroke,
-                StrokeThickness = StrokeThickness,
-                RenderTransform = new TranslateTransform(X, Y)
-            };
+            RadiusX = Math.Abs(point.X - Center.X);
+            RadiusY = Math.Abs(point.Y - Center.Y);
+        }
+        public override void Initialize(Point point)
+        {
+            Center = point;
+            RadiusX = 0;
+            RadiusY = 0;
         }
     }
 }

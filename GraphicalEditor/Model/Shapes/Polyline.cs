@@ -2,40 +2,32 @@
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace GraphicalEditor.GraphicalPrimitives
+namespace GraphicalEditor.Model.Shapes
 {
     public class PolylineShape : ShapeBase
     {
-        public PointCollection Points { get; }
-
-        public PolylineShape()
+        public List<Point> Points { get; set; } = new List<Point>();
+        public override void Draw(DrawingContext dc)
         {
-            Points = new PointCollection();
-            int numPoints = rnd.Next(3, 7);
-
-            for (int i = 0; i < numPoints; i++)
+            if (Points.Count > 1)
             {
-                Points.Add(new Point(
-                    rnd.Next(0, CanvasWidth),
-                    rnd.Next(0, CanvasHeight)));
+                for (int i = 0; i < Points.Count - 1; i++)
+                    dc.DrawLine(new Pen(new SolidColorBrush(StrokeColor), StrokeThickness), Points[i], Points[i + 1]);
             }
-
-            Stroke = new SolidColorBrush(Color.FromRgb(
-                (byte)rnd.Next(256),
-                (byte)rnd.Next(256),
-                (byte)rnd.Next(256)));
-            StrokeThickness = 2;
         }
-
-        public override Shape CreateShape()
+        public override void Update(Point point)
         {
-            return new Polyline
-            {
-                Points = Points,
-                Stroke = Stroke,
-                StrokeThickness = StrokeThickness,
-                RenderTransform = new TranslateTransform(0, 0)
-            };
+            if (Points.Count > 0)
+                Points[Points.Count - 1] = point;
+        }
+        public override void FinalizeDrawing(Point point)
+        {
+            Points.Add(point);
+        }
+        public override void Initialize(Point point)
+        {
+            Points.Clear();
+            Points.Add(point);
         }
     }
 }

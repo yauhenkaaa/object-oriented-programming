@@ -1,40 +1,25 @@
 ﻿using System.Windows.Media;
+using System.Windows;
 using System.Windows.Shapes;
 
-namespace GraphicalEditor.GraphicalPrimitives
+namespace GraphicalEditor.Model.Shapes
 {
     public class LineShape : ShapeBase
     {
-        public double X1 { get; set; }
-        public double Y1 { get; set; }
-        public double X2 { get; set; }
-        public double Y2 { get; set; }
-
-        public LineShape()
+        public Point Start { get; set; }
+        public Point End { get; set; }
+        public override void Draw(DrawingContext dc)
         {
-            X1 = rnd.Next(0, CanvasWidth);
-            Y1 = rnd.Next(0, CanvasHeight);
-            X2 = rnd.Next(0, CanvasWidth);
-            Y2 = rnd.Next(0, CanvasHeight);
-
-            Stroke = new SolidColorBrush(Color.FromRgb(
-                (byte)rnd.Next(256),
-                (byte)rnd.Next(256),
-                (byte)rnd.Next(256)));
-            StrokeThickness = 2;
+            dc.DrawLine(new Pen(new SolidColorBrush(StrokeColor), StrokeThickness), Start, End);
         }
-
-        public override Shape CreateShape()
+        public override void Update(Point point)
         {
-            return new Line
-            {
-                X1 = X1,
-                Y1 = Y1,
-                X2 = X2,
-                Y2 = Y2,
-                Stroke = Stroke,
-                StrokeThickness = StrokeThickness
-            };
+            End = point;
+        }
+        public override void Initialize(Point point)
+        {
+            Start = point;
+            End = point;
         }
     }
 }

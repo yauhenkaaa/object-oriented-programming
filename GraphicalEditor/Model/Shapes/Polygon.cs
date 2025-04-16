@@ -2,60 +2,42 @@
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace GraphicalEditor.GraphicalPrimitives
+namespace GraphicalEditor.Model.Shapes
 {
     public class PolygonShape : ShapeBase
     {
-        public PointCollection Points { get; }
-        public int Sides { get; }
-        public double Radius { get; }
-        public double CenterX { get; }
-        public double CenterY { get; }
-
-        public PolygonShape()
+        public List<Point> Points { get; set; } = new List<Point>();
+        public override void Draw(DrawingContext dc)
         {
-            Sides = rnd.Next(3, 8);
-            Radius = rnd.Next(20, 200);
-            CenterX = rnd.Next((int)Radius, CanvasWidth - (int)Radius);
-            CenterY = rnd.Next((int)Radius, CanvasHeight - (int)Radius);
-
-            Points = GenerateRegularPolygonPoints();
-
-            Stroke = new SolidColorBrush(Color.FromRgb(
-                (byte)rnd.Next(256),
-                (byte)rnd.Next(256),
-                (byte)rnd.Next(256)));
-            StrokeThickness = 2;
-        }
-
-        private PointCollection GenerateRegularPolygonPoints()
-        {
-            var points = new PointCollection();
-            double angleStep = 360.0 / Sides;
-            double currentAngle = 0;
-
-            for (int i = 0; i < Sides; i++)
+            if (Points.Count >= 2)
             {
-                double radians = currentAngle * (Math.PI / 180);
-                double x = CenterX + Radius * Math.Cos(radians);
-                double y = CenterY + Radius * Math.Sin(radians);
-
-                points.Add(new Point(x, y));
-                currentAngle += angleStep;
+                var geometry = new StreamGeometry();
+                using (var ctx = geometry.Open())
+                {
+                    ctx.BeginFigure(Points[0], true, true); 
+                    ctx.PolyLineTo(Points.GetRange(1, Points.Count - 1), true, false);
+                }
+                geometry.Freeze();
+                dc.DrawGeometry(
+                    new SolidColorBrush(FillColor),
+                    new Pen(new SolidColorBrush(StrokeColor), StrokeThickness),
+                    geometry
+                );
             }
-
-            return points;
         }
-
-        public override Shape CreateShape()
+        public override void Update(Point point)
         {
-            return new Polygon
-            {
-                Points = Points,
-                Stroke = Stroke,
-                StrokeThickness = StrokeThickness,
-                RenderTransform = new TranslateTransform(0, 0)
-            };
+            if (Points.Count > 0)
+                Points[Points.Count - 1] = point;
+        }
+        public override void FinalizeDrawing(Point point)
+        {
+            Points.Add(point);
+        }
+        public override void Initialize(Point point)
+        {
+            Points.Clear();
+            Points.Add(point);
         }
     }
 }

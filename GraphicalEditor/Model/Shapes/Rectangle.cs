@@ -1,39 +1,27 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace GraphicalEditor.GraphicalPrimitives
+namespace GraphicalEditor.Model.Shapes
 {
     public class RectangleShape : ShapeBase
     {
-        public double X { get; }
-        public double Y { get; }
-        public double Width { get; }
-        public double Height { get; }
-
-        public RectangleShape()
+        public Point TopLeft { get; set; }
+        public Point BottomRight { get; set; }
+        public override void Draw(DrawingContext dc)
         {
-            Width = rnd.Next(20, 300);
-            Height = rnd.Next(20, 300);
-            X = rnd.Next(0, CanvasWidth - (int)Width);
-            Y = rnd.Next(0, CanvasHeight - (int)Height);
-
-            Stroke = new SolidColorBrush(Color.FromRgb(
-                (byte)rnd.Next(256),
-                (byte)rnd.Next(256),
-                (byte)rnd.Next(256)));
-            StrokeThickness = 2;
+            Rect rect = new Rect(TopLeft, BottomRight);
+            dc.DrawRectangle(new SolidColorBrush(FillColor), new Pen(new SolidColorBrush(StrokeColor), StrokeThickness), rect);
         }
-
-        public override Shape CreateShape()
+        public override void Update(Point point)
         {
-            return new Rectangle
-            {
-                Width = Width,
-                Height = Height,
-                Stroke = Stroke,
-                StrokeThickness = StrokeThickness,
-                RenderTransform = new TranslateTransform(X, Y)
-            };
+            BottomRight = point;
         }
+        public override void Initialize(Point point)
+        {
+            TopLeft = point;
+            BottomRight = point;
+        }
+    
     }
 }

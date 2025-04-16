@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Canvas x:Name="cnvDrawingArea" Background="Transparent" MouseDown="cnvDrawingArea_MouseDown" 
+                MouseUp="cnvDrawingArea_MouseUp" MouseMove="cnvDrawingArea_MouseMove"/>
     </Grid>
 </UserControl>

@@ -12,6 +12,21 @@
             <ColumnDefinition Width="600"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        
+        <local:MyCanvas x:Name="drawCanvas" Grid.ColumnSpan="2" Margin="80,71,250,0" Background="Transparent"/>
+        <StackPanel Grid.Column="1" Margin="350,50,0,0" Background="#FFD5D5D5">
+            <Separator Height="25" Visibility="Hidden" RenderTransformOrigin="0.499,-0.498"/>
+            <TextBlock Text="Цвет линии:" FontFamily="Arial" FontSize="18" Margin="0,0,0,5" Width="230"/>
+            <xctk:ColorPicker x:Name="LineColorPicker" SelectedColor="Black" SelectedColorChanged="LineColorPicker_SelectedColorChanged" Margin="0,0,0,10" Width="230"/>
+            <Separator Height="25" Visibility="Hidden" RenderTransformOrigin="0.499,-0.498"/>
+            <TextBlock Text="Цвет заливки:" FontFamily="Arial" FontSize="18" Margin="0,0,0,5" Width="230"/>
+            <xctk:ColorPicker x:Name="FillColorPicker" SelectedColorChanged="FillColorPicker_SelectedColorChanged" SelectedColor="White" Width="230"/>
+            <Separator Height="25" Visibility="Hidden" RenderTransformOrigin="0.499,-0.498"/>
+            <TextBlock Text="Толщина линии:" FontFamily="Arial" FontSize="18" Width="230"/>
+            <Slider Name="sldThickness" Minimum="1" Value="0" ValueChanged="sldThickness_ValueChanged" Maximum="10" Width="230" VerticalAlignment="Center" SmallChange="1"/>
+            <TextBox Name="tbxThickness" Text="{Binding Value, ElementName=sldThickness}" FontFamily="Arial" FontSize="18" Width="40" Margin="5,0"/>
+
+        </StackPanel>
         <WrapPanel Margin="0,50,520,0" Background="#FFE3E3E3">
             <Button Name="btnLine" Width="80" Height="55" Click="btnLine_Click">
                 <Image Source="View/Images/line.png" Width="54" Height="32"/>
@@ -29,20 +44,6 @@
                 <Image Source="View/Images/polygon.png" Width="64" Height="37"/>
             </Button>
         </WrapPanel>
-        <Canvas Name="drawCanvas" Grid.ColumnSpan="2" Margin="80,71,250,0" Background="White"/>
-        <StackPanel Grid.Column="1" Margin="350,50,0,0" Background="#FFD5D5D5">
-            <Separator Height="25" Visibility="Hidden" RenderTransformOrigin="0.499,-0.498"/>
-            <TextBlock Text="Цвет линии:" FontFamily="Arial" FontSize="18" Margin="0,0,0,5" Width="230"/>
-            <xctk:ColorPicker x:Name="LineColorPicker" SelectedColor="Black" Margin="0,0,0,10" Width="230"/>
-            <Separator Height="25" Visibility="Hidden" RenderTransformOrigin="0.499,-0.498"/>
-            <TextBlock Text="Цвет заливки:" FontFamily="Arial" FontSize="18" Margin="0,0,0,5" Width="230"/>
-            <xctk:ColorPicker x:Name="FillColorPicker" SelectedColor="White" Width="230"/>
-            <Separator Height="25" Visibility="Hidden" RenderTransformOrigin="0.499,-0.498"/>
-            <TextBlock Text="Толщина линии:" FontFamily="Arial" FontSize="18" Width="230"/>
-            <Slider Name="sldThickness" Minimum="1" Value="0" ValueChanged="sldThickness_ValueChanged" Maximum="10" Width="230" VerticalAlignment="Center" SmallChange="1"/>
-            <TextBox Name="tbxThickness" Text="{Binding Value, ElementName=sldThickness}" FontFamily="Arial" FontSize="18" Width="40" Margin="5,0"/>
-
-        </StackPanel>
         <Menu Margin="0,0,0,713" Grid.ColumnSpan="2" BorderBrush="Black">
             <MenuItem Header="Файл" Height="47" Width="50" FontFamily="Arial" FontSize="16">
                 <MenuItem Header="Новый" 
@@ -59,14 +60,14 @@
                 <Separator/>
             </MenuItem>
             <Separator Height="68" Visibility="Hidden" Width="31"/>
-            <Button Height="40" Width="50">
+            <Button Name="btnUndo" Height="40" Width="50">
                 <Image Source="View/Images/undo.png" Width="50" Height="35"/>
             </Button>
-            <Button Height="40" Width="50">
+            <Button Name="btnRedo" Height="40" Width="50">
                 <Image Source="View/Images/redo.png" Width="50" Height="35"/>
             </Button>
             <Separator Height="68" Background="Black" Width="30"/>
-            <Button Height="40" Width="200">
+            <Button Name="btnAddPlugin" Height="40" Width="200">
                 <StackPanel Width="200" Orientation="Horizontal">
                     <Image Source="View/Images/plus.png" Width="43" Height="35"/>
                     <Separator Visibility="Hidden" Width="10"/>

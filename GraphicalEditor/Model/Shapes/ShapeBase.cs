@@ -1,16 +1,16 @@
-﻿using System.Windows.Media;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using System.Windows.Media;
 
-namespace GraphicalEditor.GraphicalPrimitives
+namespace GraphicalEditor.Model.Shapes
 {
     public abstract class ShapeBase
     {
-        protected const int CanvasWidth = 700;
-        protected const int CanvasHeight = 737;
-        protected static Random rnd = new Random();
-        public Brush Stroke { get; set; }
+        public Color StrokeColor { get; set; }
+        public Color FillColor { get; set; }
         public double StrokeThickness { get; set; }
-
-        public abstract Shape CreateShape();
+        public abstract void Draw(DrawingContext dc);
+        public abstract void Update(Point point);
+        public virtual void FinalizeDrawing(Point point) => Update(point);
+        public virtual void Initialize(Point point) { }
     }
 }
