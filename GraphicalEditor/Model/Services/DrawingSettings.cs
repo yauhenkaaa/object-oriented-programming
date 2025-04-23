@@ -12,5 +12,6 @@ namespace GraphicalEditor.Model.Services
         public Color StrokeColor { get; set; } = Colors.Black;
         public Color FillColor { get; set; } = Colors.Transparent;
         public double StrokeThickness { get; set; } = 1.0;
+ 
     }
 }

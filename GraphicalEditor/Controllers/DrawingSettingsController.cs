@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using GraphicalEditor.Model.Services;
 using System.Windows.Media;
 
-namespace GraphicalEditor.Model.Services
+namespace GraphicalEditor.Controllers
 {
     public class DrawingSettingsController
     {

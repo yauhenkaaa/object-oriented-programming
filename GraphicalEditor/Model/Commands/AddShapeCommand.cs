@@ -3,22 +3,16 @@ using GraphicalEditor.Model.Shapes;
 
 namespace GraphicalEditor.Model.Commands
 {
-    public interface ICommand
-    {
-        void Execute();
-        void Unexecute();
-    }
-
     public class AddShapeCommand : ICommand
     {
         private readonly ShapeBase _shape;
-        private readonly IList<ShapeBase> _shapesList;
-        public AddShapeCommand(ShapeBase shape, IList<ShapeBase> shapesList)
+        private readonly List<ShapeBase> _shapes;
+        public AddShapeCommand(ShapeBase shape, List<ShapeBase> shapes)
         {
             _shape = shape;
-            _shapesList = shapesList;
+            _shapes = shapes;
         }
-        public void Execute() => _shapesList.Add(_shape);
-        public void Unexecute() => _shapesList.Remove(_shape);
+        public void Execute() => _shapes.Add(_shape);
+        public void Undo() => _shapes.Remove(_shape);
     }
 }

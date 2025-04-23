@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GraphicalEditor.Controllers
+namespace GraphicalEditor.Model.Commands
 {
-    class PluginLoader
+    public interface ICommand
     {
-
+        void Execute();
+        void Undo();
     }
 }

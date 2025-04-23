@@ -1,11 +1,10 @@
-﻿using GraphicalEditor.Model.Shapes;
-using GraphicalEditor.Model.Services;
-using GraphicalEditor.Controllers;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows;
+using GraphicalEditor.Model.Shapes;
+using GraphicalEditor.Controllers;
+using GraphicalEditor.Model.Commands;
 using System.Windows.Threading;
 
 namespace GraphicalEditor
@@ -14,22 +13,26 @@ namespace GraphicalEditor
     {
         private ShapeBase _currentShape;
         private bool _isDrawing;
+        private UndoRedoController _undoRedoController;
 
         public List<ShapeBase> ShapesList { get; } = new List<ShapeBase>();
         public string CurrentShapeType { get; set; }
         public DrawingSettingsController DrawingSettingsController { get; set; }
 
+        public void SetUndoRedoController(UndoRedoController controller)
+        {
+            _undoRedoController = controller;
+        }
+
         public MyCanvas()
         {
             InitializeComponent();
-            Background = Brushes.White;
             MouseDown += cnvDrawingArea_MouseDown;
             MouseMove += cnvDrawingArea_MouseMove;
             MouseUp += cnvDrawingArea_MouseUp;
         }
 
-        private bool IsMultiClickShape =>
-            CurrentShapeType == "Polyline" || CurrentShapeType == "Polygon";
+        private bool IsMultiClickShape => CurrentShapeType == "Polyline" || CurrentShapeType == "Polygon";
 
         private void cnvDrawingArea_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -48,12 +51,7 @@ namespace GraphicalEditor
             {
                 if (!_isDrawing)
                 {
-                    _currentShape = ShapeFactory.Instance.CreateShape(CurrentShapeType);
-                    ApplyDrawingSettings(_currentShape);
-                    _currentShape.Initialize(pos);
-                    _currentShape.FinalizeDrawing(pos);
-                    _isDrawing = true;
-                    CaptureMouse();
+                    StartNewShape(pos);
                 }
                 else
                 {
@@ -63,44 +61,52 @@ namespace GraphicalEditor
             }
             else
             {
-                _currentShape = ShapeFactory.Instance.CreateShape(CurrentShapeType);
-                ApplyDrawingSettings(_currentShape);
-                _currentShape.Initialize(pos);
-                _isDrawing = true;
-                CaptureMouse();
+                StartNewShape(pos);
             }
+        }
+
+        private void StartNewShape(Point pos)
+        {
+            _currentShape = ShapeFactory.Instance.CreateShape(CurrentShapeType);
+            ApplyDrawingSettings(_currentShape);
+            _currentShape.Initialize(pos);
+            _isDrawing = true;
+            CaptureMouse();
         }
 
         private void cnvDrawingArea_MouseMove(object sender, MouseEventArgs e)
         {
             if (!_isDrawing || _currentShape == null) return;
-            var pos = e.GetPosition(cnvDrawingArea);
-            _currentShape.Update(pos);
+            _currentShape.Update(e.GetPosition(cnvDrawingArea));
             Dispatcher.Invoke(InvalidateVisual, DispatcherPriority.Render);
         }
 
         private void cnvDrawingArea_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (!_isDrawing || _currentShape == null) return;
-            if (IsMultiClickShape) return;
+            if (!_isDrawing || _currentShape == null || IsMultiClickShape) return;
 
             if (e.ChangedButton == MouseButton.Left)
             {
                 var pos = e.GetPosition(cnvDrawingArea);
                 _currentShape.FinalizeDrawing(pos);
-                _isDrawing = false;
-                ReleaseMouseCapture();
-                ShapesList.Add(_currentShape);
-                _currentShape = null;
-                InvalidateVisual();
+                CompleteDrawing();
             }
+        }
+
+        private void CompleteDrawing()
+        {
+            _isDrawing = false;
+            ReleaseMouseCapture();
+            _undoRedoController.RegisterCommand(new AddShapeCommand(_currentShape, ShapesList));
+            _currentShape = null;
+            InvalidateVisual();
         }
 
         private void EndMultiClickShape()
         {
             _isDrawing = false;
             ReleaseMouseCapture();
-            ShapesList.Add(_currentShape);
+            _undoRedoController.RegisterCommand(new AddShapeCommand(_currentShape, ShapesList));
             _currentShape = null;
             InvalidateVisual();
         }
@@ -115,10 +121,8 @@ namespace GraphicalEditor
         protected override void OnRender(DrawingContext dc)
         {
             base.OnRender(dc);
-            foreach (var shape in ShapesList)
-                shape.Draw(dc);
-            if (_isDrawing && _currentShape != null)
-                _currentShape.Draw(dc);
+            foreach (var shape in ShapesList) shape.Draw(dc);
+            if (_isDrawing && _currentShape != null) _currentShape.Draw(dc);
         }
     }
 }

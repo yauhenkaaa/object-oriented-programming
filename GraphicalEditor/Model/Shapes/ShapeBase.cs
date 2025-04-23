@@ -5,6 +5,7 @@ namespace GraphicalEditor.Model.Shapes
 {
     public abstract class ShapeBase
     {
+        public virtual bool IsMultiClick { get; } = false;
         public Color StrokeColor { get; set; }
         public Color FillColor { get; set; }
         public double StrokeThickness { get; set; }

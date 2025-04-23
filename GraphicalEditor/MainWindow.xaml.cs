@@ -9,15 +9,20 @@ namespace GraphicalEditor
 {
     public partial class MainWindow : Window
     {
+        private readonly UndoRedoController _undoRedoController;
         private readonly DrawingSettingsController _drawingSettingsController = new DrawingSettingsController();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            var undoRedoService = new UndoRedoService();
+            _undoRedoController = new UndoRedoController(undoRedoService, drawCanvas);
+
+            drawCanvas.SetUndoRedoController(_undoRedoController);
             drawCanvas.DrawingSettingsController = _drawingSettingsController;
-            LineColorPicker.SelectedColorChanged += LineColorPicker_SelectedColorChanged;
-            FillColorPicker.SelectedColorChanged += FillColorPicker_SelectedColorChanged;
         }
+
         private void btnLine_Click(object sender, RoutedEventArgs e) => drawCanvas.CurrentShapeType = "Line";
         private void btnRectangle_Click(object sender, RoutedEventArgs e) => drawCanvas.CurrentShapeType = "Rectangle";
         private void btnEllipse_Click(object sender, RoutedEventArgs e) => drawCanvas.CurrentShapeType = "Ellipse";
@@ -35,5 +40,7 @@ namespace GraphicalEditor
             if (e.NewValue.HasValue)
                 _drawingSettingsController.UpdateFillColor(e.NewValue.Value);
         }
+        private void btnUndo_Click(object sender, RoutedEventArgs e) => _undoRedoController.Undo();
+        private void btnRedo_Click(object sender, RoutedEventArgs e) => _undoRedoController.Redo();
     }
 }

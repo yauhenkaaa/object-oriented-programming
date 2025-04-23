@@ -2,12 +2,12 @@
 using GraphicalEditor.Model.Commands;
 using GraphicalEditor.Model.Shapes;
 
-namespace GraphicalEditor.Controller
+namespace GraphicalEditor.Controllers
 {
     public class CanvasController
     {
-        private readonly IList<ShapeBase> _shapesList;
-        public CanvasController(IList<ShapeBase> shapesList)
+        private List<ShapeBase> _shapesList;
+        public CanvasController(List<ShapeBase> shapesList)
         {
             _shapesList = shapesList;
         }

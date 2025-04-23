@@ -60,10 +60,10 @@
                 <Separator/>
             </MenuItem>
             <Separator Height="68" Visibility="Hidden" Width="31"/>
-            <Button Name="btnUndo" Height="40" Width="50">
-                <Image Source="View/Images/undo.png" Width="50" Height="35"/>
+            <Button Name="btnUndo" Height="40" Width="50" Click="btnUndo_Click">
+                <Image Source="View/Images/undo.png" Width="50" Height="35" RenderTransformOrigin="0.61,0.5"/>
             </Button>
-            <Button Name="btnRedo" Height="40" Width="50">
+            <Button Name="btnRedo" Height="40" Width="50" Click="btnRedo_Click">
                 <Image Source="View/Images/redo.png" Width="50" Height="35"/>
             </Button>
             <Separator Height="68" Background="Black" Width="30"/>

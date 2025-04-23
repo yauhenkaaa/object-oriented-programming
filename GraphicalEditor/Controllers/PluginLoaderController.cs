@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphicalEditor.Controllers
 {
-    class ShapesController
+    class PluginLoaderController
     {
 
     }

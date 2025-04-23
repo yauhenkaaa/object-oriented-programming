@@ -6,6 +6,7 @@ namespace GraphicalEditor.Model.Shapes
 {
     public class PolylineShape : ShapeBase
     {
+        public override bool IsMultiClick => true;
         public List<Point> Points { get; set; } = new List<Point>();
         public override void Draw(DrawingContext dc)
         {
