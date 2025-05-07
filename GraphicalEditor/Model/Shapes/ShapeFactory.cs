@@ -8,7 +8,7 @@ namespace GraphicalEditor.Model.Shapes
 {
     public class ShapeFactory
     {
-        private static ShapeFactory _instance;
+        private static ShapeFactory? _instance;
         public static ShapeFactory Instance => _instance ??= new ShapeFactory();
         private readonly Dictionary<string, Func<ShapeBase>> _factories = new Dictionary<string, Func<ShapeBase>>();
         private ShapeFactory()
@@ -29,6 +29,15 @@ namespace GraphicalEditor.Model.Shapes
         {
             if (!_factories.ContainsKey(shapeType))
                 _factories.Add(shapeType, factoryMethod);
+        }
+        public IDictionary<string, Type> RegisteredTypes()
+        {
+            var dict = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
+            foreach (var kv in _factories)
+            {
+                dict[kv.Key] = kv.Value().GetType();
+            }
+            return dict;
         }
     }
 }

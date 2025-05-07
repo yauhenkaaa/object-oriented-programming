@@ -16,7 +16,7 @@ namespace GraphicalEditor
         private UndoRedoController _undoRedoController;
 
         public List<ShapeBase> ShapesList { get; } = new List<ShapeBase>();
-        public string CurrentShapeType { get; set; }
+        public string CurrentShapeType { get; set; } = "Line";
         public DrawingSettingsController DrawingSettingsController { get; set; }
 
         public void SetUndoRedoController(UndoRedoController controller)
@@ -32,7 +32,9 @@ namespace GraphicalEditor
             MouseUp += cnvDrawingArea_MouseUp;
         }
 
-        private bool IsMultiClickShape => CurrentShapeType == "Polyline" || CurrentShapeType == "Polygon";
+        // теперь определяется по свойству IsMultiClick у создаваемого типа
+        private bool IsMultiClickShape =>
+            ShapeFactory.Instance.CreateShape(CurrentShapeType).IsMultiClick;
 
         private void cnvDrawingArea_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -121,8 +123,10 @@ namespace GraphicalEditor
         protected override void OnRender(DrawingContext dc)
         {
             base.OnRender(dc);
-            foreach (var shape in ShapesList) shape.Draw(dc);
-            if (_isDrawing && _currentShape != null) _currentShape.Draw(dc);
+            foreach (var shape in ShapesList)
+                shape.Draw(dc);
+            if (_isDrawing && _currentShape != null)
+                _currentShape.Draw(dc);
         }
     }
 }

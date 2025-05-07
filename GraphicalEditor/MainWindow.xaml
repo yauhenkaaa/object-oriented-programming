@@ -27,7 +27,7 @@
             <TextBox Name="tbxThickness" Text="{Binding Value, ElementName=sldThickness}" FontFamily="Arial" FontSize="18" Width="40" Margin="5,0"/>
 
         </StackPanel>
-        <WrapPanel Margin="0,50,520,0" Background="#FFE3E3E3">
+        <WrapPanel Name="toolbarPanel" Margin="0,50,520,0" Background="#FFE3E3E3">
             <Button Name="btnLine" Width="80" Height="55" Click="btnLine_Click">
                 <Image Source="View/Images/line.png" Width="54" Height="32"/>
             </Button>
@@ -46,17 +46,10 @@
         </WrapPanel>
         <Menu Margin="0,0,0,713" Grid.ColumnSpan="2" BorderBrush="Black">
             <MenuItem Header="Файл" Height="47" Width="50" FontFamily="Arial" FontSize="16">
-                <MenuItem Header="Новый" 
-                  Command="{Binding NewCommand}"
-                  InputGestureText="Ctrl+N"/>
-                <MenuItem Header="Открыть..." 
-                  Command="{Binding OpenCommand}"
-                  InputGestureText="Ctrl+O"/>
-                <MenuItem Header="Сохранить" 
-                  Command="{Binding SaveCommand}"
-                  InputGestureText="Ctrl+S"/>
-                <MenuItem Header="Сохранить как..." 
-                  Command="{Binding SaveAsCommand}"/>
+                <MenuItem Header="Новый"       Click="File_New_Click"/>
+                <MenuItem Header="Открыть..."  Click="File_Open_Click"/>
+                <MenuItem Header="Сохранить"   Click="File_Save_Click"/>
+                <MenuItem Header="Сохранить как..." Click="File_SaveAs_Click"/>
                 <Separator/>
             </MenuItem>
             <Separator Height="68" Visibility="Hidden" Width="31"/>
@@ -67,7 +60,7 @@
                 <Image Source="View/Images/redo.png" Width="50" Height="35"/>
             </Button>
             <Separator Height="68" Background="Black" Width="30"/>
-            <Button Name="btnAddPlugin" Height="40" Width="200">
+            <Button Name="btnAddPlugin" Click="btnAddPlugin_Click" Height="40" Width="200">
                 <StackPanel Width="200" Orientation="Horizontal">
                     <Image Source="View/Images/plus.png" Width="43" Height="35"/>
                     <Separator Visibility="Hidden" Width="10"/>

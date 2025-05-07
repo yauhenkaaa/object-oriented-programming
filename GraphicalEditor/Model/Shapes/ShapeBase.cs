@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
+using System.Text.Json.Serialization;
 
 namespace GraphicalEditor.Model.Shapes
 {
@@ -12,6 +13,6 @@ namespace GraphicalEditor.Model.Shapes
         public abstract void Draw(DrawingContext dc);
         public abstract void Update(Point point);
         public virtual void FinalizeDrawing(Point point) => Update(point);
-        public virtual void Initialize(Point point) { }
+        public abstract void Initialize(Point point);
     }
 }
